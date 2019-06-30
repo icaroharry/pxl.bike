@@ -1,33 +1,56 @@
+@import url('https://fonts.googleapis.com/css?family=VT323&display=swap');
+
+body {
+  background-color: #DBDBDB;
+}
+
+.pixel-font {
+  font-family: 'VT323', monospace;
+}
+
 .App {
-  text-align: center;
-}
-
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
-  pointer-events: none;
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  align-items: center;
+  height: 100vh - 20px;
+  padding-bottom: 20px;
 }
 
-.App-link {
-  color: #61dafb;
+.bike {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 30px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.slider {
+  margin-top: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.twitter-picker {
+  box-shadow: none !important;
+  margin-bottom: 20px;
+}
+.slider-picker {
+  width: 100%;
+}
+
+.alternative-part {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px;
+  padding: 5px;
+}
+
+.download-button {
+  margin-top: 40px;
+  border: none;
+  font-size: 30px;
+  padding: 0 20px;
 }
