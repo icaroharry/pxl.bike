@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { TwitterPicker, SliderPicker } from 'react-color';
+import * as axios from 'axios';
 
 import AlternativePartPicker from './components/shared/AlternativePartPicker';
 import Navbar from './components/shared/Navbar';
@@ -122,7 +123,7 @@ const App = () => {
   };
 
   /* Canvas Donwload */
-  const download = () => {
+  const download = async () => {
     const originalCanvas = document.getElementById('bike');
     const canvas = document.createElement('canvas');
     canvas.width = originalCanvas.width * 4;
@@ -137,18 +138,21 @@ const App = () => {
     /// convert canvas content to data-uri for link. When download
     /// attribute is set the content pointed to by link will be
     /// pushed as "download" in HTML5 capable browsers
-    lnk.href = canvas.toDataURL("image/png;base64");
+    lnk.href = canvas.toDataURL('image/png;base64');
 
-    /// create a "fake" click-event to trigger the download
+    const res = await axios.post('https://us-central1-bikepixel.cloudfunctions.net/sendBikePixelOnEmail');
+    console.log(res);
+
+    /// create a 'fake' click-event to trigger the download
     if (document.createEvent) {
-      e = document.createEvent("MouseEvents");
-      e.initMouseEvent("click", true, true, window,
+      e = document.createEvent('MouseEvents');
+      e.initMouseEvent('click', true, true, window,
                       0, 0, 0, 0, 0, false, false, false,
                       false, 0, null);
 
       lnk.dispatchEvent(e);
     } else if (lnk.fireEvent) {
-      lnk.fireEvent("onclick");
+      lnk.fireEvent('onclick');
     }
   };
 
