@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, createRef, useState } from 'react';
 
-import pixels, { trimPixels, getDimensions } from '../common/pixels';
-import { isObject } from '../common/utils';
+import pixels, { trimPixels, getDimensions } from '../../common/pixels';
+import { isObject } from '../../common/utils';
 
 
 const AlternativePartPicker = ({ part, selectAlternative, pixelSize }) => {

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { SliderPicker, TwitterPicker } from 'react-color';
+import { TwitterPicker, SliderPicker } from 'react-color';
 
-import AlternativePartPicker from './components/AlternativePartPicker';
-import Navbar from './components/Navbar';
+import AlternativePartPicker from './components/shared/AlternativePartPicker';
+import Navbar from './components/shared/Navbar';
 import pixels, { PIXEL_SIZE } from './common/pixels';
 import { isObject, getRandomColor } from './common/utils';
 import './App.css';
@@ -84,6 +84,10 @@ const App = () => {
 
   useEffect(() => {
     const canvas = document.getElementById('bike');
+    drawBike(canvas, pixelSize);
+  }, [colors, alternativePart, pixelSize]);
+
+  const drawBike = (canvas, pixelSize) => {
     if (canvas.getContext) {
       const ctx = canvas.getContext("2d");
       ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -97,8 +101,8 @@ const App = () => {
           ctx.fillRect(pixel[0] * pixelSize, pixel[1] * pixelSize, pixelSize, pixelSize);
         })
       })
-    }
-  }, [colors, alternativePart, pixelSize]);
+    };
+  };
 
   const clearAlternativePart = () => {
     const canvas = document.getElementById('bike');
@@ -119,7 +123,11 @@ const App = () => {
 
   /* Canvas Donwload */
   const download = () => {
-    const canvas = document.getElementById('bike');
+    const originalCanvas = document.getElementById('bike');
+    const canvas = document.createElement('canvas');
+    canvas.width = originalCanvas.width * 4;
+    canvas.height = originalCanvas.height * 4;
+    drawBike(canvas, pixelSize * 4);
     const lnk = document.createElement('a')
     let e;
 
@@ -148,12 +156,12 @@ const App = () => {
     <div className="App">
       <Navbar color={colors.frame}/>
       <div>
-        <h2 class="pixel-font">
+        <h2 className="pixel-font">
           Selecione as partes da bike e mude as cores pra criar sua pixel bike personalizada.
         </h2>
       </div>
       <div>
-        <h3 class="pixel-font">
+        <h3 className="pixel-font">
           Clique em "pronto" quando acabar
         </h3>
       </div>
@@ -179,8 +187,8 @@ const App = () => {
         />
       </div>
       <div>
-        <button class="download-button" style={{ backgroundColor: colors.frame }} onClick={download}>
-          <span class="pixel-font" style={{ color: 'white' }}>
+        <button className="download-button" style={{ backgroundColor: colors.frame }} onClick={download}>
+          <span className="pixel-font" style={{ color: 'white' }}>
             pronto
           </span>
         </button>
