@@ -1,56 +1,10 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 @import url('https://fonts.googleapis.com/css?family=VT323&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Work+Sans&display=swap');  
 
 body {
-  background-color: #DBDBDB;
-}
-
-.pixel-font {
-  font-family: 'VT323', monospace;
-}
-
-.App {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 100vh - 20px;
-  padding-bottom: 20px;
-}
-
-.bike {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 30px;
-}
-
-.slider {
-  margin-top: 40px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-}
-
-.twitter-picker {
-  box-shadow: none !important;
-  margin-bottom: 20px;
-}
-.slider-picker {
-  width: 100%;
-}
-
-.alternative-part {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100px;
-  padding: 5px;
-}
-
-.download-button {
-  margin-top: 40px;
-  border: none;
-  font-size: 30px;
-  padding: 0 20px;
+  @apply bg-gray-100
 }

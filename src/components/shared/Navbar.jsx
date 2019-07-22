@@ -3,26 +3,14 @@ import React, { useState, useEffect } from 'react';
 
 const Navbar = ({ color }) => {
   return (
-    <div style={{ ...styles, backgroundColor: color }}>
-      <span className="pixel-font" style={{ ...logoStyle, color: 'white' }}>
-        pixel.bike
-      </span>
+    <div className="w-full max-w-full h-16 shadow-lg" style={{ backgroundColor: color }}>
+      <div className="container mx-auto flex px-6 lg:px-40 xl:px-64 flex-col">
+        <span className="font-pixel">
+          pixel.bike
+        </span>
+      </div>
     </div>
   );
-};
-
-const styles = {
-  display: 'flex',
-  justifyContent: 'center',
-  alignSelf: 'flex-start',
-  height: '50px',
-  width: '100%'
-};
-
-const logoStyle = {
-  alignSelf: 'center',
-  textShadow: '-1px 0 black, 0 1px black, 1px 0 black, 0 -1px black',
-  fontSize: 30
 };
 
 export default Navbar;

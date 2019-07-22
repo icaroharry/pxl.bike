@@ -6,7 +6,6 @@ import AlternativePartPicker from './components/shared/AlternativePartPicker';
 import Navbar from './components/shared/Navbar';
 import pixels, { PIXEL_SIZE } from './common/pixels';
 import { isObject, getRandomColor } from './common/utils';
-import './App.css';
 
 const App = () => {
   const [pixelSize, setPixelSize] = useState(PIXEL_SIZE);
@@ -159,43 +158,40 @@ const App = () => {
   return (
     <div className="App">
       <Navbar color={colors.frame}/>
-      <div>
-        <h2 className="pixel-font">
-          Selecione as partes da bike e mude as cores pra criar sua pixel bike personalizada.
-        </h2>
-      </div>
-      <div>
-        <h3 className="pixel-font">
-          Clique em "pronto" quando acabar
-        </h3>
-      </div>
-      <div>
-        <AlternativePartPicker part={selectedPart} selectAlternative={selectAlternative} pixelSize={pixelSize} />
-      </div>
-      <div style={{ boxShadow: `0 0 0 14px #333, 0 0 0 16px ${colors.frame}` }} className="bike">
-        <canvas id="bike" width={pixelSize * 29} height={pixelSize * 20}></canvas>
-      </div>
-      <div className="slider">
-        <TwitterPicker
-          color={colors[selectedPart]}
-          colors={Array.from(new Set(Object.values(colors)))}
-          onChange={(color) => {
-            setColors({ ...colors, [selectedPart]: color.hex });
-          }}
-        />
-        <SliderPicker
-          color={colors[selectedPart]}
-          onChange={(color) => {
-            setColors({ ...colors, [selectedPart]: color.hex });
-          }}
-        />
-      </div>
-      <div>
-        <button className="download-button" style={{ backgroundColor: colors.frame }} onClick={download}>
-          <span className="pixel-font" style={{ color: 'white' }}>
-            pronto
-          </span>
-        </button>
+      <div className="container mx-auto lg:w-lg xl:w-xl flex-col">
+        <div className="flex flex-row justify-center">
+          <div className="sm:w-full md:w-1/5"></div>
+          <div className="sm:w-full md:w-3/5">
+            <div className="flex flex-row">
+              <AlternativePartPicker part={selectedPart} selectAlternative={selectAlternative} pixelSize={pixelSize} />
+              {/* 464 x 320 */}
+              <canvas id="bike" className="bg-white p-5 my-3 rounded shadow-md w-full" width={pixelSize * 29} height={pixelSize * 20}></canvas>
+            </div>
+            <TwitterPicker
+              className="my-3 rounded shadow-md mx-auto min-w-full"
+              color={colors[selectedPart]}
+              colors={Array.from(new Set(Object.values(colors)))}
+              onChange={(color) => {
+                setColors({ ...colors, [selectedPart]: color.hex });
+              }}
+            />
+            <SliderPicker
+              className="my-3"
+              color={colors[selectedPart]}
+              onChange={(color) => {
+                setColors({ ...colors, [selectedPart]: color.hex });
+              }}
+            />
+          </div>
+          <div className="sm:w-full md:w-1/5"></div>
+        </div>
+        {/* <div className="">
+          <button className="download-button" style={{ backgroundColor: colors.frame }} onClick={download}>
+            <span className="font-sans" style={{ color: 'white' }}>
+              pronto
+            </span>
+          </button>
+        </div> */}
       </div>
     </div>
   );

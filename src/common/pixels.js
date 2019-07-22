@@ -228,6 +228,20 @@ export const getDimensions = (part, pixelSize) => {
   return [(x + 1) * pixelSize, (y + 1) * pixelSize];
 }
 
-export const PIXEL_SIZE = 16;
+export const PIXEL_SIZE = 9 // 12 14 20;
+
+// screens: {
+//   'sm': '640px',
+//   // => @media (min-width: 640px) { ... }
+
+//   'md': '768px',
+//   // => @media (min-width: 768px) { ... }
+
+//   'lg': '1024px',
+//   // => @media (min-width: 1024px) { ... }
+
+//   'xl': '1280px',
+//   // => @media (min-width: 1280px) { ... }
+// }
 
 export default pixels;
