@@ -228,20 +228,23 @@ export const getDimensions = (part, pixelSize) => {
   return [(x + 1) * pixelSize, (y + 1) * pixelSize];
 }
 
-export const PIXEL_SIZE = 9 // 12 14 20;
-
-// screens: {
-//   'sm': '640px',
-//   // => @media (min-width: 640px) { ... }
-
-//   'md': '768px',
-//   // => @media (min-width: 768px) { ... }
-
-//   'lg': '1024px',
-//   // => @media (min-width: 1024px) { ... }
-
-//   'xl': '1280px',
-//   // => @media (min-width: 1280px) { ... }
-// }
+export const calcPixelSize = (size) => {
+  if(size <= 640){
+    // height 320 = 10.344
+    return 10;
+  } else if(size > 640 && size <= 768){
+    // height 345 = 11.206
+    return 11;
+  } else if(size > 768 && size <= 1024){
+    // heigth 384 = 12.551
+    return 12;
+  } else if(size > 1024 && size <= 1280){
+    // height 460.8 = 15.2
+    return 15;
+  } else if(size > 1280){
+    // height 614.39 = 20.496
+    return 20;
+  }
+};
 
 export default pixels;

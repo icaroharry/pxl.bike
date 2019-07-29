@@ -10,3 +10,12 @@ export const getRandomColor = () => {
   }
   return color;
 }
+
+export const getSize = () => {
+  return {
+    innerHeight: window.innerHeight,
+    innerWidth: window.innerWidth,
+    outerHeight: window.outerHeight,
+    outerWidth: window.outerWidth,
+  };
+}

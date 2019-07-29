@@ -6,5 +6,6 @@
 @import url('https://fonts.googleapis.com/css?family=Work+Sans&display=swap');  
 
 body {
-  @apply bg-gray-100
+  @apply bg-gray-200;
+  background-repeat: repeat;
 }

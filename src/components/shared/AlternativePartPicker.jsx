@@ -15,7 +15,8 @@ const AlternativePartPicker = ({ part, selectAlternative, pixelSize }) => {
         onClick={() => selectAlternative({
           [part]: p
         })}
-        className="alternative-part"
+        className="mx-auto my-2"
+        key={i}
         style={{ width: squareDimension, height: squareDimension }}>
           <canvas id={p} ref={refs.current[i]} />
       </div>
@@ -45,7 +46,8 @@ const AlternativePartPicker = ({ part, selectAlternative, pixelSize }) => {
   }, [part, squareDimension]);
 
   return (
-    <div className="alternative-part" >
+    partsToDraw.length > 0 &&
+    <div className="flex flex-row sm:flex-col align-middle justify-center p-5 bg-white my-0 sm:my-3 rounded shadow-md">
       {partsToDraw}
     </div>
   )

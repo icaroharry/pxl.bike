@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { TwitterPicker, SliderPicker } from 'react-color';
 import * as axios from 'axios';
 
 import AlternativePartPicker from './components/shared/AlternativePartPicker';
 import Navbar from './components/shared/Navbar';
-import pixels, { PIXEL_SIZE } from './common/pixels';
+import pixels, { calcPixelSize } from './common/pixels';
 import { isObject, getRandomColor } from './common/utils';
 
 const App = () => {
-  const [pixelSize, setPixelSize] = useState(PIXEL_SIZE);
+  const [pixelSize, setPixelSize] = useState(calcPixelSize(window.innerWidth));
   const [selectedPart, setSelectedPart] = useState('frame');
   const [showDialog, toggleDialog] = useState(false);
   const [alternativePart, setAlternativePart] = useState({
@@ -17,7 +17,7 @@ const App = () => {
     backRim: 'default'
   });
 
-  const [colors, setColors] = useState({
+  const randomize = () => ({
     saddle: getRandomColor(),
     seatPost: getRandomColor(),
     frame: getRandomColor(),
@@ -30,7 +30,9 @@ const App = () => {
     crankSet: '#000',
     pedal: '#333',
     handleBar: getRandomColor(),
-  });
+  })
+
+  const [colors, setColors] = useState(randomize());
 
   const getSize = () => {
     return {
@@ -52,42 +54,42 @@ const App = () => {
   }, []);
 
   useEffect(() => {
-    if (windowSize.innerWidth + 30 < PIXEL_SIZE * 29) {
-      setPixelSize(Math.floor(PIXEL_SIZE * (windowSize.innerWidth - 100) / (PIXEL_SIZE * 29)))
-    }
-  }, [windowSize]);
+    setPixelSize(calcPixelSize(windowSize.innerWidth));
+  }, [windowSize.innerWidth, setPixelSize]);
 
-  useEffect(() => {
+  const handleClickOnBike = useCallback((event) => {
     const canvas = document.getElementById('bike');
     const elemLeft = canvas.offsetLeft;
     const elemTop = canvas.offsetTop;
 
-    canvas.addEventListener('click', (event) => {
-      var xVal = event.pageX - elemLeft,
-      yVal = event.pageY - elemTop;
-      Object.keys(pixels).find(part => {
-        let partToDraw = pixels[part];
-        if (isObject(pixels[part])) {
-          partToDraw = pixels[part][alternativePart[part]];
-        }
+    const xVal = event.pageX - elemLeft;
+    const yVal = event.pageY - elemTop;
 
-        const found = partToDraw.find(pixel => {
-          return JSON.stringify(pixel) === JSON.stringify([Math.floor(xVal/pixelSize), Math.floor(yVal/pixelSize)])
-        });
+    console.log(event.pageX, event.pageY, elemLeft, elemTop)
+    Object.keys(pixels).find(part => {
+      let partToDraw = pixels[part];
+      if (isObject(pixels[part])) {
+        partToDraw = pixels[part][alternativePart[part]];
+      }
 
-        if (found) {
-          return setSelectedPart(part);
-        }
-      })
-    }, false);
+      const found = partToDraw.find(pixel => {
+        return JSON.stringify(pixel) === JSON.stringify([Math.floor(xVal/pixelSize), Math.floor(yVal/pixelSize)])
+      });
+
+      if (found) {
+        return setSelectedPart(part);
+      }
+    })
   }, [alternativePart, pixelSize]);
 
   useEffect(() => {
+    console.log("effect", alternativePart, pixelSize)
     const canvas = document.getElementById('bike');
-    drawBike(canvas, pixelSize);
-  }, [colors, alternativePart, pixelSize]);
+    canvas.removeEventListener('click', handleClickOnBike, false);
+    canvas.addEventListener('click', handleClickOnBike, false);
+  }, [alternativePart, pixelSize, handleClickOnBike]);
 
-  const drawBike = (canvas, pixelSize) => {
+  const drawBike = useCallback((canvas) => {
     if (canvas.getContext) {
       const ctx = canvas.getContext("2d");
       ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -102,7 +104,12 @@ const App = () => {
         })
       })
     };
-  };
+  }, [pixelSize, alternativePart, colors]);
+
+  useEffect(() => {
+    const canvas = document.getElementById('bike');
+    drawBike(canvas);
+  }, [colors, alternativePart, pixelSize, drawBike]);
 
   const clearAlternativePart = () => {
     const canvas = document.getElementById('bike');
@@ -139,8 +146,8 @@ const App = () => {
     /// pushed as "download" in HTML5 capable browsers
     lnk.href = canvas.toDataURL('image/png;base64');
 
-    const res = await axios.post('https://us-central1-bikepixel.cloudfunctions.net/sendBikePixelOnEmail');
-    console.log(res);
+    // const res = await axios.post('https://us-central1-bikepixel.cloudfunctions.net/sendBikePixelOnEmail');
+    // console.log(res);
 
     /// create a 'fake' click-event to trigger the download
     if (document.createEvent) {
@@ -158,14 +165,15 @@ const App = () => {
   return (
     <div className="App">
       <Navbar color={colors.frame}/>
-      <div className="container mx-auto lg:w-lg xl:w-xl flex-col">
-        <div className="flex flex-row justify-center">
-          <div className="sm:w-full md:w-1/5"></div>
-          <div className="sm:w-full md:w-3/5">
-            <div className="flex flex-row">
-              <AlternativePartPicker part={selectedPart} selectAlternative={selectAlternative} pixelSize={pixelSize} />
+      <div className="container mx-auto w-xs sm:w-sm md:w-md lg:w-lg xl:w-xl flex-col">
+        <div className="flex flex-col sm:flex-row justify-center">
+          <div className="w-full sm:w-1/5 mr-0 sm:mr-3 mt-3 sm:mt-0">
+            <AlternativePartPicker part={selectedPart} selectAlternative={selectAlternative} pixelSize={pixelSize} />
+          </div>
+          <div className="w-full sm:w-3/5">
+            <div className="flex justify-center w-full p-5 bg-white my-3 rounded shadow-md">
               {/* 464 x 320 */}
-              <canvas id="bike" className="bg-white p-5 my-3 rounded shadow-md w-full" width={pixelSize * 29} height={pixelSize * 20}></canvas>
+              <canvas id="bike" width={pixelSize * 29} height={pixelSize * 20}></canvas>
             </div>
             <TwitterPicker
               className="my-3 rounded shadow-md mx-auto min-w-full"
@@ -183,7 +191,23 @@ const App = () => {
               }}
             />
           </div>
-          <div className="sm:w-full md:w-1/5"></div>
+          <div className="w-full sm:w-1/5 ml-0 sm:ml-3">
+              <div className="flex flex-col justify-center w-full p-5 bg-white my-3 rounded shadow-md">
+                <button
+                  onClick={() => setColors(randomize())}
+                  class="bg-white hover:bg-gray-200 text-black py-2 my-2 px-4 rounded"
+                  style={{border: `1px solid ${colors.frame}`, color: colors.frame }}
+                >
+                  I'm lucky
+                </button>
+                <button
+                  class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                  onClick={download}
+                >
+                  Save
+                </button>
+              </div>
+          </div>
         </div>
         {/* <div className="">
           <button className="download-button" style={{ backgroundColor: colors.frame }} onClick={download}>
