@@ -4,20 +4,22 @@ import * as axios from 'axios';
 
 import AlternativePartPicker from './components/shared/AlternativePartPicker';
 import Navbar from './components/shared/Navbar';
-import pixels, { calcPixelSize } from './common/pixels';
+import pixels, { calcPixelSize, wheelAlternatives, handleBarAlternatives } from './common/pixels';
 import { isObject, getRandomColor } from './common/utils';
 
 const App = () => {
   const [pixelSize, setPixelSize] = useState(calcPixelSize(window.innerWidth));
   const [selectedPart, setSelectedPart] = useState('frame');
-  const [showDialog, toggleDialog] = useState(false);
-  const [alternativePart, setAlternativePart] = useState({
-    handleBar: 'pursuit',
-    frontRim: 'default',
-    backRim: 'default'
-  });
+  
+  const randomizeParts = () => ({
+    handleBar: handleBarAlternatives[handleBarAlternatives.length * Math.random() | 0],
+    frontRim: wheelAlternatives[wheelAlternatives.length * Math.random() | 0],
+    backRim: wheelAlternatives[wheelAlternatives.length * Math.random() | 0],
+  })
 
-  const randomize = () => ({
+  const [alternativePart, setAlternativePart] = useState(randomizeParts());
+
+  const randomizeColors = () => ({
     saddle: getRandomColor(),
     seatPost: getRandomColor(),
     frame: getRandomColor(),
@@ -32,7 +34,7 @@ const App = () => {
     handleBar: getRandomColor(),
   })
 
-  const [colors, setColors] = useState(randomize());
+  const [colors, setColors] = useState(randomizeColors());
 
   const getSize = () => {
     return {
@@ -46,7 +48,7 @@ const App = () => {
   const [windowSize, setWindowSize] = useState(getSize());
 
   useEffect(() => {
-    toggleDialog(true)
+    console.log(wheelAlternatives[wheelAlternatives.length * Math.random() | 0])
     window.addEventListener('resize', () => setWindowSize(getSize()));
     return () => {
       window.removeEventListener('resize', () => setWindowSize(getSize()));
@@ -194,7 +196,7 @@ const App = () => {
           <div className="w-full sm:w-1/5 ml-0 sm:ml-3">
               <div className="flex flex-col justify-center w-full p-5 bg-white my-3 rounded shadow-md">
                 <button
-                  onClick={() => setColors(randomize())}
+                  onClick={() => setAlternativePart(randomizeParts()) || setColors(randomizeColors())}
                   class="bg-white hover:bg-gray-200 text-black py-2 my-2 px-4 rounded"
                   style={{border: `1px solid ${colors.frame}`, color: colors.frame }}
                 >

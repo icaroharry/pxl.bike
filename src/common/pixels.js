@@ -247,4 +247,7 @@ export const calcPixelSize = (size) => {
   }
 };
 
+export const wheelAlternatives = ['default', 'large', 'full', 'threeSpoke', 'fourSpoke'];
+export const handleBarAlternatives = ['pursuit', 'drop', 'bullHorn'];
+
 export default pixels;
