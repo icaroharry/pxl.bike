@@ -89,7 +89,7 @@ const App = () => {
     canvas.addEventListener('click', handleClickOnBike, false);
   }, [alternativePart, pixelSize, handleClickOnBike]);
 
-  const drawBike = useCallback((canvas) => {
+  const drawBike = useCallback((canvas, pSize) => {
     if (canvas.getContext) {
       const ctx = canvas.getContext("2d");
       ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -100,15 +100,15 @@ const App = () => {
         }
         partToDraw.forEach(pixel => {
           ctx.fillStyle = colors[part];
-          ctx.fillRect(pixel[0] * pixelSize, pixel[1] * pixelSize, pixelSize, pixelSize);
+          ctx.fillRect(pixel[0] * pSize, pixel[1] * pSize, pSize, pSize);
         })
       })
     };
-  }, [pixelSize, alternativePart, colors]);
+  }, [alternativePart, colors]);
 
   useEffect(() => {
     const canvas = document.getElementById('bike');
-    drawBike(canvas);
+    drawBike(canvas, pixelSize);
   }, [colors, alternativePart, pixelSize, drawBike]);
 
   const clearAlternativePart = () => {
