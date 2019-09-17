@@ -231,7 +231,7 @@ export const getDimensions = (part, pixelSize) => {
 export const calcPixelSize = (size) => {
   if(size <= 640){
     // height 320 = 10.344
-    return 10;
+    return 9;
   } else if(size > 640 && size <= 768){
     // height 345 = 11.206
     return 11;
@@ -247,7 +247,7 @@ export const calcPixelSize = (size) => {
   }
 };
 
-export const wheelAlternatives = ['default', 'large', 'full', 'threeSpoke', 'fourSpoke'];
-export const handleBarAlternatives = ['pursuit', 'drop', 'bullHorn'];
+export const wheelAlternatives = ["default", "large", "full", "threeSpoke", "fourSpoke"];
+export const handleBarAlternatives = ["pursuit", "drop", "bullHorn"];
 
 export default pixels;

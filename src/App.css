@@ -9,3 +9,27 @@ body {
   @apply bg-gray-200;
   background-repeat: repeat;
 }
+
+.chrome-picker > div:first-child {
+  padding-bottom: 30% !important;
+}
+
+.chrome-picker {
+  @apply shadow !important;
+  @apply rounded !important;
+  font-family: none !important;
+}
+
+.twitter-picker {
+  @apply shadow !important;
+  @apply rounded !important;
+  border: none !important;
+}
+
+.twitter-picker > div:last-child > div {
+  display: none !important;
+}
+
+.twitter-picker > div:last-child > div:last-child {
+  display: block !important;
+}

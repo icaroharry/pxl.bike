@@ -6,7 +6,7 @@ module.exports = {
         sans: ['Work\\ Sans', 'sans-serif']
       },
       spacing: {
-        'xs': '320px',
+        'xs': '300px',
         'sm': '575px',
         'md': '640px',
         'lg': '768px',

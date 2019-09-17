@@ -1,21 +1,21 @@
-export const isObject = (obj) => {
-  return (!!obj) && (obj.constructor === Object);
+export const isObject = obj => {
+  return !!obj && obj.constructor === Object;
 };
 
 export const getRandomColor = () => {
-  const letters = '0123456789ABCDEF';
-  let color = '#';
+  const letters = "0123456789ABCDEF";
+  let color = "#";
   for (var i = 0; i < 6; i++) {
     color += letters[Math.floor(Math.random() * 16)];
   }
   return color;
-}
+};
 
 export const getSize = () => {
   return {
     innerHeight: window.innerHeight,
     innerWidth: window.innerWidth,
     outerHeight: window.outerHeight,
-    outerWidth: window.outerWidth,
+    outerWidth: window.outerWidth
   };
-}
+};
