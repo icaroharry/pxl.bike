@@ -9,13 +9,13 @@ const Header = ({ color, handleDownload, handleRandomize }) => {
         <span className="font-pixel text-3xl text-white">pxl.bike</span>
         <div>
           <button
-            className="hover:bg-blue-700 text-white mr-2 font-bold py-2 px-4 rounded"
+            className="text-white mr-2 py-2 px-4 rounded"
             onClick={handleRandomize}
           >
             <img src={Random} />
           </button>
           <button
-            className="hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+            className="text-white py-2 px-4 rounded"
             onClick={handleDownload}
           >
             <img src={Save} />

@@ -207,7 +207,7 @@ const Builder = () => {
         }
       />
       <div className="flex flex-col sm:flex-row justify-center">
-        <div className="w-full sm:w-1/5 mr-0 sm:mr-3 mt-3 xs:mt-0 sm:mt-0">
+        <div className="w-full sm:w-1/5 mr-0 sm:mr-3 xs:mt-0 sm:mt-0 md:mt-0 lg:mt-3 xl:mt-3">
           {isObject(pixels[selectedPart]) && (
             <AlternativePartPicker
               part={selectedPart}
